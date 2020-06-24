@@ -1,12 +1,13 @@
-const express = require('express');
-const path = require('path')
-const app = express();
+var http = require('http');
+var express = require('express');
+var ecstatic = require('ecstatic');
+var history = require('connect-history-api-fallback');
 
-//指定启动服务器到哪个文件夹，我这边指的是dist文件夹
-app.use(express.static(path.join(__dirname, 'dist')))
+var app = express();
 
-//监听端口为3000
-app.listen(8888, function () {
+app.use(history());
+app.use(ecstatic({ root: __dirname + '/dist' }));
 
+http.createServer(app).listen(8888, function () {
     console.log("server at 8888...");
-})
+});
